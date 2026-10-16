@@ -305,6 +305,40 @@ ul,ol{padding:0;list-style:none}
   .sfa-shot img{height:100%;object-fit:cover}
   .sfa-shot--cta{min-height:0}
 }
+.sfa-workshops--class{background:var(--paper-2)}
+@media (min-width:961px){
+}
+/* set gallery: photos + clips, every tile 3:4. phone 2 cols (CTA full width), tablet 3 cols (CTA spans 2), desktop 5 cols (CTA 2x2) */
+.sfa-shots--set{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;columns:auto}
+.sfa-shots--set>.sfa-shot{margin:0;aspect-ratio:3/4}
+.sfa-shots--set .sfa-shot img{height:100%;object-fit:cover}
+.sfa-shots--set .sfa-shot--cta{aspect-ratio:3/4;min-height:0}
+@media (min-width:641px){
+  .sfa-shots--set{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+  .sfa-shots--set .sfa-shot--cta{grid-column:span 2;aspect-ratio:auto}
+}
+@media (min-width:961px){
+  .sfa-shots--set{grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-rows:calc((100cqw - 64px) / 5 * 1.3333)}
+  .sfa-shots--set>.sfa-shot{grid-area:auto;aspect-ratio:auto;height:100%}
+  .sfa-shots--set .sfa-shot--cta{grid-area:3/4/span 1/span 2}
+}
+/* clip tiles keep a 3:4 frame in the masonry layouts; the desktop grid sizes them by grid-area */
+.sfa-shots:not(.sfa-shots--set) .sfa-clip{aspect-ratio:3/4}
+.sfa-clip img{height:100%;object-fit:cover}
+@media (min-width:961px){.sfa-shots:not(.sfa-shots--set) .sfa-clip{aspect-ratio:auto}}
+@media (max-width:640px){.sfa-clip__tag{top:7px;right:7px;font-size:9.5px}}
+/* clip tile: the poster sits underneath; the muted 9:16 loop is cropped to the 3:4 tile and fades in once loaded */
+.sfa-clip{background:#120e0b;cursor:zoom-in}
+.sfa-clip iframe{position:absolute;left:0;top:50%;width:100%;height:auto;aspect-ratio:9/16;border:0;transform:translateY(-50%);pointer-events:none;opacity:0;transition:opacity .8s var(--ease)}
+.sfa-clip.is-live iframe{opacity:1}
+.sfa-clip__btn{position:absolute;inset:0;z-index:2;width:100%;height:100%;padding:0;border:0;background:none;cursor:zoom-in}
+.sfa-clip__btn>span{position:absolute;left:10px;bottom:10px;padding:5px 7px 4px;border-radius:5px;background:rgba(17,13,10,.7);color:#fff;font:500 11px/1 var(--f-mono);letter-spacing:.12em;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
+.sfa-clip:hover .sfa-clip__btn>span,.sfa-clip__btn:focus-visible>span{opacity:1;transform:none}
+.sfa-clip__tag{position:absolute;z-index:3;top:10px;right:10px;display:inline-flex;align-items:center;gap:5px;padding:5px 8px 4px 6px;border-radius:5px;background:rgba(17,13,10,.62);color:#fff;font:500 10.5px/1 var(--f-mono);font-style:normal;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+.sfa-clip__tag svg{width:13px;height:13px}
+.sfa-lb__clip{position:relative;height:min(78vh,1100px);aspect-ratio:9/16;max-width:100%;border-radius:12px;overflow:hidden;background:#000 center/cover no-repeat}
+.sfa-lb__clip iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.sfa-lb[data-mode="image"] .sfa-lb__cap{text-align:center}
 .sfa-shot:hover img{transform:scale(1.035)}
 button.sfa-shot>span{position:absolute;left:10px;bottom:10px;padding:5px 7px 4px;border-radius:5px;background:rgba(17,13,10,.7);color:#fff;font:500 11px/1 var(--f-mono);letter-spacing:.12em;opacity:0;transform:translateY(4px);transition:opacity .25s,transform .25s}
 button.sfa-shot:hover>span,button.sfa-shot:focus-visible>span{opacity:1;transform:none}
@@ -398,6 +432,7 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
   .sfa-hero__media{justify-self:start;width:min(calc(100% - 16px),400px)}
   .sfa-hero__cap{right:-6px;top:72px}
   .sfa-films li,.sfa-films li.is-feature{grid-column:span 3}
+  .sfa-films li:last-child:nth-child(odd){grid-column:span 6}
   .sfa-scenes{grid-template-columns:repeat(2,minmax(0,1fr))}
   .sfa-strip ul{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:22px}
   .sfa-strip li:nth-child(3){padding-left:0;border-left:0}
@@ -534,11 +569,37 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
   </ul>
 </section>
 
+<!-- =========================== WORKSHOP CLASS PHOTOS =========================== -->
+<section class="sfa-sec sfa-workshops sfa-workshops--class" id="class-photos" aria-labelledby="class-h">
+  <div class="sfa-wrap">
+    <header class="sfa-head">
+      <span class="sfa-tape" data-reveal style="--tape:var(--peach)">01 <b>/</b> The workshops</span>
+      <h2 class="sfa-h2" id="class-h" data-reveal>Snapshots from the workshops</h2>
+    </header>
+    <!-- group photos (more than two people) + muted workshop clips. --a = desktop grid-area: 3:4 tiles span 2 rows, 3:2 tiles span 1, row 3 is a strip of two wide crops; 4 cols x 5 rows -->
+    <div class="sfa-shots-wrap"><div class="sfa-shots" data-label="Workshop snapshot">
+      <button class="sfa-shot" type="button" data-i="0" style="--a:1/1/span 2"><img src="assets/img/workshops/Group-image-11.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3479-1.webp" width="700" height="933" alt="Workshop group photo on the studio floor" loading="lazy" decoding="async"><span>01 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="1" style="--a:1/2"><img src="assets/img/workshops/Group-img-5.webp" width="1000" height="667" alt="Devang pointing to notes on the screen during a session" loading="lazy" decoding="async"><span>02 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="2" style="--a:1/3/span 2" data-clip="1236478858"><img src="assets/img/clips/1236478858.webp" width="540" height="960" alt="A participant watching a lens breakdown on the projector screen" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: A participant watching a lens breakdown on the projector screen (muted)"><span>03 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="3" style="--a:1/4"><img src="assets/img/workshops/group-img-7.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/YUVL0009-1.webp" width="1000" height="667" alt="Devang presenting to a full workshop room" loading="lazy" decoding="async"><span>04 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="4" style="--a:2/2"><img src="assets/img/workshops/group-image-13.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/Kohinoor-Rice-BTS-Stills-306-1-1.webp" width="1000" height="667" alt="Behind the scenes on the Kohinoor Rice shoot: storyboard review with the crew" loading="lazy" decoding="async"><span>05 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="5" style="--a:2/4"><img src="assets/img/workshops/group-img-9.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/YUVL9973-1.webp" width="1000" height="667" alt="Participants following a session around the workshop table" loading="lazy" decoding="async"><span>06 / 13</span></button>
+      <button class="sfa-shot sfa-shot--wide" type="button" data-i="6" style="--a:3/1/span 1/span 2"><img src="assets/img/workshops/Group-img-2.webp" width="1000" height="667" alt="A full room of participants at their laptops during a workshop session" loading="lazy" decoding="async"><span>07 / 13</span></button>
+      <button class="sfa-shot sfa-shot--wide" type="button" data-i="7" style="--a:3/3/span 1/span 2"><img src="assets/img/workshops/Group-img-3.webp" width="1000" height="667" alt="Participants watching a shoot from the director’s chairs" loading="lazy" decoding="async"><span>08 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="8" style="--a:4/1/span 2" data-clip="1236483683"><img src="assets/img/clips/1236483683.webp" width="540" height="960" alt="Explaining a point beside the projector screen on set" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Explaining a point beside the projector screen on set (muted)"><span>09 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="9" style="--a:4/2/span 2"><img src="assets/img/workshops/group-img-12.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3481-1.webp" width="700" height="933" alt="Workshop group photo on set" loading="lazy" decoding="async"><span>10 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="10" style="--a:4/3"><img src="assets/img/workshops/Group-img-6.webp" width="1000" height="667" alt="Wide view of the workshop room with participants at their laptops" loading="lazy" decoding="async"><span>11 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="11" style="--a:4/4/span 2" data-clip="1236479875"><img src="assets/img/clips/1236479875.webp" width="540" height="960" alt="Presenting a slide on the Phantom high-speed camera" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Presenting a slide on the Phantom high-speed camera (muted)"><span>12 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="12" style="--a:5/3"><img src="assets/img/workshops/Group-img-4.webp" width="1000" height="667" alt="Devang answering questions at the head of the workshop table" loading="lazy" decoding="async"><span>13 / 13</span></button>
+    </div></div>
+  </div>
+</section>
+
 <!-- =========================== BRANDS & FACES =========================== -->
 <section class="sfa-sec sfa-brands" id="brands" aria-labelledby="brands-h">
   <div class="sfa-wrap">
     <header class="sfa-head">
-      <span class="sfa-tape" data-reveal>01 <b>/</b> The clients</span>
+      <span class="sfa-tape" data-reveal>02 <b>/</b> The clients</span>
       <h2 class="sfa-h2" id="brands-h" data-reveal>Brands you recognise. Faces you know.</h2>
       <p data-reveal style="--d:.08s">Over the last decade, Devang has directed some of India’s most recognised brand campaigns.</p>
     </header>
@@ -624,9 +685,9 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
 <section class="sfa-sec sfa-work" id="work" aria-labelledby="work-h">
   <div class="sfa-wrap">
     <header class="sfa-head">
-      <span class="sfa-tape" data-reveal>02 <b>/</b> The reel</span>
+      <span class="sfa-tape" data-reveal>03 <b>/</b> The reel</span>
       <h2 class="sfa-h2" id="work-h" data-reveal>Selected films</h2>
-      <p data-reveal style="--d:.08s">Eight of the 600+ brand films Devang has directed. Press play — each one opens with sound.</p>
+      <p data-reveal style="--d:.08s">Eleven of the 600+ brand films Devang has directed. Press play — each one opens with sound.</p>
     </header>
     <ul class="sfa-films">
       <li class="is-feature" data-reveal>
@@ -648,27 +709,45 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
         </button>
       </li>
       <li data-reveal style="--d:.06s">
-        <button class="sfa-film" type="button" data-vimeo="753775835" data-title="Netflix Tudum × Manoj Bajpayee — Soup teaser" aria-label="Play Netflix Tudum, Soup teaser, with Manoj Bajpayee">
-          <span class="sfa-film__media" style="--z:1.35"><img src="assets/films/753775835.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:38</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
-          <span class="sfa-film__meta"><span class="sfa-film__brand">Netflix Tudum</span><span class="sfa-film__sub">Soup teaser · Manoj Bajpayee</span></span>
+        <button class="sfa-film" type="button" data-vimeo="1069463447" data-title="Mumbai Indians × IPL Anthem 2025" aria-label="Play Mumbai Indians, IPL Anthem 2025">
+          <span class="sfa-film__media"><img src="assets/films/1069463447.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">2:09</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
+          <span class="sfa-film__meta"><span class="sfa-film__brand">Mumbai Indians</span><span class="sfa-film__sub">IPL Anthem 2025</span></span>
         </button>
       </li>
       <li data-reveal style="--d:.12s">
-        <button class="sfa-film" type="button" data-vimeo="1113499967" data-title="Atlys × Visa at ₹1" aria-label="Play Atlys, Visa at one rupee">
-          <span class="sfa-film__media"><img src="assets/films/1113499967.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:42</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
-          <span class="sfa-film__meta"><span class="sfa-film__brand">Atlys</span><span class="sfa-film__sub">Visa at ₹1</span></span>
-        </button>
-      </li>
-      <li data-reveal>
         <button class="sfa-film" type="button" data-vimeo="1097730351" data-title="Scapia — Summer Release: The Visa Appointment" aria-label="Play Scapia, The Visa Appointment">
           <span class="sfa-film__media"><img src="assets/films/1097730351.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">1:00</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
           <span class="sfa-film__meta"><span class="sfa-film__brand">Scapia</span><span class="sfa-film__sub">Summer Release · The Visa Appointment</span></span>
+        </button>
+      </li>
+      <li data-reveal>
+        <button class="sfa-film" type="button" data-vimeo="753775835" data-title="Netflix Tudum × Manoj Bajpayee — Soup teaser" aria-label="Play Netflix Tudum, Soup teaser, with Manoj Bajpayee">
+          <span class="sfa-film__media" style="--z:1.35"><img src="assets/films/753775835.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:38</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
+          <span class="sfa-film__meta"><span class="sfa-film__brand">Netflix Tudum</span><span class="sfa-film__sub">Soup teaser · Manoj Bajpayee</span></span>
         </button>
       </li>
       <li data-reveal style="--d:.06s">
         <button class="sfa-film" type="button" data-vimeo="1095515827" data-title="Scapia — Summer Release: The Highway Dhaba" aria-label="Play Scapia, The Highway Dhaba">
           <span class="sfa-film__media" style="--z:1.35"><img src="assets/films/1095515827.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:59</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
           <span class="sfa-film__meta"><span class="sfa-film__brand">Scapia</span><span class="sfa-film__sub">Summer Release · The Highway Dhaba</span></span>
+        </button>
+      </li>
+      <li data-reveal style="--d:.12s">
+        <button class="sfa-film" type="button" data-vimeo="1116089443" data-title="Zomato — Mashup" aria-label="Play Zomato, Mashup">
+          <span class="sfa-film__media"><img src="assets/films/1116089443.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:43</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
+          <span class="sfa-film__meta"><span class="sfa-film__brand">Zomato</span><span class="sfa-film__sub">Mashup</span></span>
+        </button>
+      </li>
+      <li data-reveal>
+        <button class="sfa-film" type="button" data-vimeo="1113499967" data-title="Atlys × Visa at ₹1" aria-label="Play Atlys, Visa at one rupee">
+          <span class="sfa-film__media"><img src="assets/films/1113499967.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:42</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
+          <span class="sfa-film__meta"><span class="sfa-film__brand">Atlys</span><span class="sfa-film__sub">Visa at ₹1</span></span>
+        </button>
+      </li>
+      <li data-reveal style="--d:.06s">
+        <button class="sfa-film" type="button" data-vimeo="1111292816" data-title="MasterChow × Ranveer Brar" aria-label="Play MasterChow, with Ranveer Brar">
+          <span class="sfa-film__media"><img src="assets/films/1111292816.webp" width="960" height="540" alt="" loading="lazy" decoding="async"><span class="sfa-film__dur">0:26</span><span class="sfa-film__play" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#17120E"><path d="M5 3l16 9-16 9z"/></svg></span></span>
+          <span class="sfa-film__meta"><span class="sfa-film__brand">MasterChow</span><span class="sfa-film__sub">Ranveer Brar</span></span>
         </button>
       </li>
       <li data-reveal style="--d:.12s">
@@ -687,15 +766,15 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
   <div class="sfa-wrap">
     <div class="sfa-academy__top">
       <div>
-        <span class="sfa-tape" data-reveal>03 <b>/</b> What we’re building</span>
+        <span class="sfa-tape" data-reveal>04 <b>/</b> What we’re building</span>
         <h2 class="sfa-display" id="academy-h" data-reveal>Fry <span>Academy</span></h2>
         <p class="sfa-lead" data-reveal style="--d:.08s">An academy for ad filmmakers who are brilliant at the craft but were never taught the business.</p>
       </div>
       <figure class="sfa-academy__photo" data-reveal style="--d:.1s">
         <!-- slideshow: add another <img> here to add a slide (and a matching dot button) -->
         <div class="sfa-frame sfa-slides" data-slides>
-          <img class="is-on" src="assets/img/workshops/IMG_3479-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3479-1.webp" width="700" height="933" alt="Workshop group photo on the studio floor" loading="lazy" decoding="async">
-          <img src="assets/img/workshops/IMG_3481-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3481-1.webp" width="700" height="933" alt="Workshop group photo on set" loading="lazy" decoding="async">
+          <img class="is-on" src="assets/img/workshops/Group-image-11.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3479-1.webp" width="700" height="933" alt="Workshop group photo on the studio floor" loading="lazy" decoding="async">
+          <img src="assets/img/workshops/group-img-12.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3481-1.webp" width="700" height="933" alt="Workshop group photo on set" loading="lazy" decoding="async">
           <span class="sfa-vf" aria-hidden="true"></span>
           <span class="sfa-dots"><button type="button" aria-label="Show photo 1" aria-current="true"></button><button type="button" aria-label="Show photo 2" aria-current="false"></button></span>
         </div>
@@ -721,7 +800,7 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
 <section class="sfa-sec sfa-who" id="who" aria-labelledby="who-h">
   <div class="sfa-wrap">
     <header class="sfa-head">
-      <span class="sfa-tape" data-reveal>04 <b>/</b> The cast</span>
+      <span class="sfa-tape" data-reveal>05 <b>/</b> The cast</span>
       <h2 class="sfa-h2" id="who-h" data-reveal>Who it’s for</h2>
       <p data-reveal style="--d:.08s">Six kinds of filmmakers. One missing skill: running the work like a business.</p>
     </header>
@@ -771,7 +850,7 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
       <figcaption class="sfa-tape">Devang Singh · Director</figcaption>
     </figure>
     <div>
-      <span class="sfa-tape" data-reveal style="--tape:var(--paper-2)">05 <b>/</b> The director</span>
+      <span class="sfa-tape" data-reveal style="--tape:var(--paper-2)">06 <b>/</b> The director</span>
       <p class="sfa-role" data-reveal>Director &amp; Co-Founder, Studio Fry</p>
       <h2 class="sfa-display" id="mentor-h" data-reveal>Devang Singh</h2>
       <div class="sfa-mstats" data-reveal>
@@ -790,23 +869,25 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
 <section class="sfa-sec sfa-workshops" id="workshops" aria-labelledby="ws-h">
   <div class="sfa-wrap">
     <header class="sfa-head">
-      <span class="sfa-tape" data-reveal style="--tape:var(--pink)">06 <b>/</b> Behind the scenes</span>
-      <h2 class="sfa-h2" id="ws-h" data-reveal>Snapshots from the workshops</h2>
+      <span class="sfa-tape" data-reveal style="--tape:var(--pink)">07 <b>/</b> Behind the scenes</span>
+      <h2 class="sfa-h2" id="ws-h" data-reveal>Snapshots from the set</h2>
     </header>
-    <!-- --a = desktop grid-area (row / col / row-span). Portraits 700×933 span 2 rows, landscapes 1000×667 span 1; the CTA tile takes the last portrait slot. -->
-    <div class="sfa-shots-wrap"><div class="sfa-shots">
-      <button class="sfa-shot" type="button" data-i="0" style="--a:1/1"><img src="assets/img/workshops/YUVL9975-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/YUVL9975-1.webp" width="1000" height="667" alt="Walking the room through a campaign key visual on screen" loading="lazy" decoding="async"><span>01 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="1" style="--a:1/2/span 2"><img src="assets/img/workshops/IMG_3479-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3479-1.webp" width="700" height="933" alt="Workshop group photo on the studio floor" loading="lazy" decoding="async"><span>02 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="2" style="--a:1/3/span 2"><img src="assets/img/workshops/bts-images.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/bts-images.webp" width="700" height="933" alt="Behind-the-scenes collage of lighting, camera and monitor setups" loading="lazy" decoding="async"><span>03 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="3" style="--a:1/4"><img src="assets/img/workshops/YUVL9973-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/YUVL9973-1.webp" width="1000" height="667" alt="Participants following a session around the workshop table" loading="lazy" decoding="async"><span>04 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="4" style="--a:2/1/span 2"><img src="assets/img/workshops/IMG_3400-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3400-1.webp" width="700" height="933" alt="Crew lighting a set on a studio floor" loading="lazy" decoding="async"><span>05 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="5" style="--a:2/4/span 2"><img src="assets/img/workshops/IMG_3408-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3408-1.webp" width="700" height="933" alt="Operating a cinema camera against a blue backdrop" loading="lazy" decoding="async"><span>06 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="6" style="--a:3/2"><img src="assets/img/workshops/YUVL0023-2.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/YUVL0023-2.webp" width="1000" height="667" alt="Answering questions at the workshop table" loading="lazy" decoding="async"><span>07 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="7" style="--a:3/3/span 2"><img src="assets/img/workshops/IMG_3363-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3363-1.webp" width="700" height="933" alt="Lining up a product shot on set with a participant" loading="lazy" decoding="async"><span>08 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="8" style="--a:4/1/span 2"><img src="assets/img/workshops/IMG_3481-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3481-1.webp" width="700" height="933" alt="Workshop group photo on set" loading="lazy" decoding="async"><span>09 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="9" style="--a:4/2/span 2"><img src="assets/img/workshops/IMG_3359-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3359-1.webp" width="700" height="933" alt="Reviewing footage at an edit station on set" loading="lazy" decoding="async"><span>10 / 11</span></button>
-      <button class="sfa-shot" type="button" data-i="10" style="--a:5/3"><img src="assets/img/workshops/Kohinoor-Rice-BTS-Stills-306-1-1.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/Kohinoor-Rice-BTS-Stills-306-1-1.webp" width="1000" height="667" alt="Behind the scenes on the Kohinoor Rice shoot: storyboard review with the crew" loading="lazy" decoding="async"><span>11 / 11</span></button>
-      <a class="sfa-shot sfa-shot--cta" href="#apply" data-form aria-haspopup="dialog" style="--a:4/4/span 2"><span class="k">Next frame is yours</span><b>Join the Academy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
+    <!-- on-set photos + muted looping Vimeo clips (cropped to 3:4 in the grid, full 9:16 in the lightbox). Desktop: 5 columns x 3 rows, the CTA takes the last two cells -->
+    <div class="sfa-shots-wrap"><div class="sfa-shots sfa-shots--set" data-label="On set">
+      <button class="sfa-shot" type="button" data-i="0"><img src="assets/img/workshops/Set-image-8.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3408-1.webp" width="700" height="933" alt="Operating a cinema camera against a blue backdrop" loading="lazy" decoding="async"><span>01 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="1" data-clip="1236484543"><img src="assets/img/clips/1236484543.webp" width="540" height="960" alt="Presenting “The Art of Slo-Mo” on the projector screen to a seated workshop" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Presenting “The Art of Slo-Mo” on the projector screen to a seated workshop (muted)"><span>02 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="2"><img src="assets/img/workshops/Set-img-2.webp" width="700" height="933" alt="Guiding a participant at an edit station on set" loading="lazy" decoding="async"><span>03 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="3" data-clip="1236478860"><img src="assets/img/clips/1236478860.webp" width="540" height="960" alt="Talking the room through a shot on the studio floor" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Talking the room through a shot on the studio floor (muted)"><span>04 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="4"><img src="assets/img/workshops/set-bts-images.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/bts-images.webp" width="700" height="933" alt="Behind-the-scenes collage of lighting, camera and monitor setups" loading="lazy" decoding="async"><span>05 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="5" data-clip="1236478856"><img src="assets/img/clips/1236478856.webp" width="540" height="960" alt="Participants working at edit stations on set" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Participants working at edit stations on set (muted)"><span>06 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="6"><img src="assets/img/workshops/Set-image-6.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3359-1.webp" width="700" height="933" alt="Reviewing footage at an edit station on set" loading="lazy" decoding="async"><span>07 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="7"><img src="assets/img/workshops/Set-img-1.webp" width="700" height="933" alt="Footage projected on a large screen on a dark studio set" loading="lazy" decoding="async"><span>08 / 13</span></button>
+      <div class="sfa-shot sfa-clip" data-i="8" data-clip="1236478857"><img src="assets/img/clips/1236478857.webp" width="540" height="960" alt="Setting up a camera rig under a lit tent on set" loading="lazy" decoding="async"><button class="sfa-clip__btn" type="button" aria-label="Open clip: Setting up a camera rig under a lit tent on set (muted)"><span>09 / 13</span></button><i class="sfa-clip__tag" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="m22 9-6 6m0-6 6 6"/></svg>Muted</i></div>
+      <button class="sfa-shot" type="button" data-i="9"><img src="assets/img/workshops/Set-image-5.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3363-1.webp" width="700" height="933" alt="Lining up a product shot on set with a participant" loading="lazy" decoding="async"><span>10 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="10"><img src="assets/img/workshops/Set-img-3.webp" width="700" height="933" alt="A participant editing at a workstation lit by a softbox" loading="lazy" decoding="async"><span>11 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="11"><img src="assets/img/workshops/set-image-7.webp" width="700" height="933" alt="Reviewing a participant’s edit under a practical lamp on set" loading="lazy" decoding="async"><span>12 / 13</span></button>
+      <button class="sfa-shot" type="button" data-i="12"><img src="assets/img/workshops/Set-image-4.webp" data-fallback="https://devangsingh.com/wp-content/uploads/2026/10/IMG_3400-1.webp" width="700" height="933" alt="Crew lighting a set on a studio floor" loading="lazy" decoding="async"><span>13 / 13</span></button>
+      <a class="sfa-shot sfa-shot--cta" href="#apply" data-form aria-haspopup="dialog"><span class="k">Next frame is yours</span><b>Join the Academy <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></b></a>
     </div></div>
   </div>
 </section>
@@ -840,7 +921,6 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
         <a href="#who">Who it’s for</a>
         <a href="#mentor">Mentor</a>
         <a href="#workshops">Workshops</a>
-        <a href="https://www.studiofry.com" target="_blank" rel="noopener">Studio Fry ↗</a>
       </nav>
     </div>
     <div class="sfa-foot__base">
@@ -927,16 +1007,18 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
   /* hero film: the poster shows first; after page load a muted Vimeo loop fades in once it's actually playing.
      "Watch with sound" swaps in the full player from the start; when it ends, the muted loop comes back
      (skipped for reduced motion and Save-Data / 2G, which keep the poster until someone presses play) */
+  /* Vimeo player API, loaded once on first use (hero film + set clips) */
+  let vimeoApi = null;
+  const loadApi = () => vimeoApi || (vimeoApi = new Promise((ok, fail) => {
+    if (window.Vimeo && window.Vimeo.Player) return ok(window.Vimeo.Player);
+    const s = d.createElement('script'); s.src = 'https://player.vimeo.com/api/player.js';
+    s.onload = () => ok(window.Vimeo.Player); s.onerror = fail; d.head.appendChild(s);
+  }));
+
   const heroFilm = d.querySelector('[data-hero-film]');
   if (heroFilm) {
     const id = heroFilm.dataset.heroFilm, filmPlay = heroFilm.querySelector('.sfa-hero__play');
     const conn = navigator.connection, lite = !!(conn && (conn.saveData || /2g/.test(conn.effectiveType || '')));
-    let vimeoApi = null;
-    const loadApi = () => vimeoApi || (vimeoApi = new Promise((ok, fail) => {
-      if (window.Vimeo && window.Vimeo.Player) return ok(window.Vimeo.Player);
-      const s = d.createElement('script'); s.src = 'https://player.vimeo.com/api/player.js';
-      s.onload = () => ok(window.Vimeo.Player); s.onerror = fail; d.head.appendChild(s);
-    }));
     const mount = params => {
       const old = heroFilm.querySelector('iframe'); if (old) old.remove();
       const fr = d.createElement('iframe');
@@ -974,10 +1056,33 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
     more.textContent = open ? 'Show fewer brands' : 'Show all 49 brands';
   });
 
+  /* set gallery clips: background mode = autoplay, loop, no controls and always muted */
+  const clipSrc = id => `https://player.vimeo.com/video/${encodeURIComponent(id)}?background=1&muted=1&loop=1&autopause=0&dnt=1`;
+  const clipTiles = [...d.querySelectorAll('.sfa-clip')];
+  const net = navigator.connection, clipLite = !!(net && (net.saveData || /2g/.test(net.effectiveType || '')));
+  if (clipTiles.length && 'IntersectionObserver' in window && !reduce && !clipLite) {
+    const players = new Map();
+    const clipIo = new IntersectionObserver(es => es.forEach(e => {
+      const tile = e.target, p = players.get(tile);
+      if (!e.isIntersecting) { if (p) p.then(pl => pl && pl.pause()).catch(() => {}); return; }
+      if (p) { p.then(pl => pl && pl.play()).catch(() => {}); return; }
+      const fr = d.createElement('iframe');
+      fr.src = clipSrc(tile.dataset.clip); fr.allow = 'autoplay; picture-in-picture'; fr.tabIndex = -1;
+      fr.title = tile.querySelector('img').alt; fr.setAttribute('aria-hidden', 'true');
+      tile.insertBefore(fr, tile.querySelector('.sfa-clip__btn'));
+      // the poster stays until the first frames actually play, so a slow or blocked player never shows black
+      players.set(tile, loadApi().then(P => {
+        const pl = new P(fr);
+        pl.on('timeupdate', function first(t) { if (t.seconds > .15) { tile.classList.add('is-live'); pl.off('timeupdate', first); } });
+        return pl;
+      }).catch(() => null));
+    }), { rootMargin: '150px 0px', threshold: .1 });
+    clipTiles.forEach(t => clipIo.observe(t));
+  }
+
   /* lightbox: Vimeo films + workshop photos */
   const lb = d.querySelector('.sfa-lb'), stage = lb.querySelector('.sfa-lb__stage'), cap = lb.querySelector('.sfa-lb__cap');
-  const shots = [...d.querySelectorAll('button.sfa-shot')];
-  let gi = 0, opener = null;
+  let shots = [], shotLabel = 'Snapshot', gi = 0, opener = null;
   const closeBtn = lb.querySelector('.sfa-lb__close');
   // focus the close button, not the cross-origin player, so Esc works straight away
   const show = () => { if (!lb.open) { lb.showModal(); root.classList.add('is-locked'); } closeBtn.focus(); };
@@ -992,14 +1097,23 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
     cap.textContent = title + ' · Directed by Devang Singh';
     show();
   };
-  const openShot = i => {
+  const openShot = (i, from) => {
+    if (from) { const g = from.closest('.sfa-shots'); shots = [...g.querySelectorAll('.sfa-shot[data-i]')]; shotLabel = g.dataset.label || 'Snapshot'; }
     gi = (i + shots.length) % shots.length;
-    const src = shots[gi].querySelector('img');
+    const tile = shots[gi], src = tile.querySelector('img');
     lb.dataset.mode = 'image';
     stage.innerHTML = '';
-    const im = d.createElement('img'); im.src = src.currentSrc || src.src; im.alt = src.alt;
-    stage.appendChild(im);
-    cap.textContent = `Workshop snapshot · ${String(gi + 1).padStart(2, '0')} / ${String(shots.length).padStart(2, '0')}`;
+    if (tile.dataset.clip) {
+      const box = d.createElement('div'); box.className = 'sfa-lb__clip';
+      box.style.backgroundImage = `url("${src.currentSrc || src.src}")`;
+      const fr = d.createElement('iframe');
+      fr.src = clipSrc(tile.dataset.clip); fr.allow = 'autoplay; fullscreen; picture-in-picture'; fr.title = src.alt;
+      box.appendChild(fr); stage.appendChild(box);
+    } else {
+      const im = d.createElement('img'); im.src = src.currentSrc || src.src; im.alt = src.alt;
+      stage.appendChild(im);
+    }
+    cap.textContent = `${shotLabel} · ${String(gi + 1).padStart(2, '0')} / ${String(shots.length).padStart(2, '0')}`;
     show();
   };
   lb.addEventListener('close', () => { stage.innerHTML = ''; root.classList.remove('is-locked'); if (opener) opener.focus(); });
@@ -1141,8 +1255,8 @@ textarea.sfa-input{min-height:92px;padding:13px 16px;resize:vertical}
     if (cta) { e.preventDefault(); openForm(cta); return; }
     const film = e.target.closest('[data-vimeo]');
     if (film) { opener = film; openFilm(film.dataset.vimeo, film.dataset.title); return; }
-    const shot = e.target.closest('button.sfa-shot');
-    if (shot) { opener = shot; openShot(+shot.dataset.i); return; }
+    const shot = e.target.closest('.sfa-shots [data-i]');
+    if (shot) { opener = shot.matches('button') ? shot : shot.querySelector('button'); openShot(+shot.dataset.i, shot); return; }
     const a = e.target.closest('a[href^="{{"]');
     if (a) { e.preventDefault(); toast(a.getAttribute('href')); }
   });
